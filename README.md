@@ -18,3 +18,4 @@ Every 1 second, the Timer sends an interrupt to CPU and the function called **vo
 You just need to start the Timer in interrupt mode in main.c. by using the following command:
       **HAL_TIM_Base_Start_IT(&htim2);**
 --->When the timer starts, it will generate an interrupt when the counter reaches the auto-reload value.
+for configuration of timer : https://deepbluembedded.com/stm32-timer-interrupt-hal-example-timer-mode-lab/
