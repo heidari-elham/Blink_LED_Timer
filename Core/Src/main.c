@@ -22,6 +22,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+volatile uint8_t led_index = 0;
+volatile uint8_t led_flag = 0;
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -162,18 +165,48 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
+
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK)
   {
       /* Starting Error */
       Error_Handler();
+
+
   }
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+	   if (led_flag) {
+		led_flag = 0;
+	  	HAL_GPIO_WritePin(GPIOH, GPIO_PIN_12, GPIO_PIN_RESET);  // Turn off LED 1
+	    HAL_GPIO_WritePin(GPIOH, GPIO_PIN_11, GPIO_PIN_RESET);  // Turn off LED 2
+	    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_RESET);   // Turn off LED 3
+	    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_RESET);   // Turn off LED 4
+
+	    // Turn on the current LED
+	    switch (led_index)
+	    {
+	        case 0:
+	            HAL_GPIO_WritePin(GPIOH, GPIO_PIN_12, GPIO_PIN_SET);  // Turn on LED 1
+	            break;
+	        case 1:
+	            HAL_GPIO_WritePin(GPIOH, GPIO_PIN_11, GPIO_PIN_SET);  // Turn on LED 2
+	            break;
+	        case 2:
+	            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);   // Turn on LED 3
+	            break;
+	        case 3:
+	            HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);   // Turn on LED 4
+	            break;
+	    }
+
+	    // Move to the next LED
+	    led_index= (led_index+1) % 4;
+	   }
+
   }
 
   /* USER CODE END 3 */

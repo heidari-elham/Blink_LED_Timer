@@ -23,7 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
-volatile uint8_t led_index = 0;
+
+extern volatile uint8_t led_flag;
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
 
@@ -443,34 +444,7 @@ void TIM2_IRQHandler(void)
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
-  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_12, GPIO_PIN_RESET);  // Turn off LED 1
-  HAL_GPIO_WritePin(GPIOH, GPIO_PIN_11, GPIO_PIN_RESET);  // Turn off LED 2
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_RESET);   // Turn off LED 3
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_RESET);   // Turn off LED 4
-
-  // Turn on the current LED
-  switch (led_index)
-  {
-      case 0:
-          HAL_GPIO_WritePin(GPIOH, GPIO_PIN_12, GPIO_PIN_SET);  // Turn on LED 1
-          break;
-      case 1:
-          HAL_GPIO_WritePin(GPIOH, GPIO_PIN_11, GPIO_PIN_SET);  // Turn on LED 2
-          break;
-      case 2:
-          HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);   // Turn on LED 3
-          break;
-      case 3:
-          HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);   // Turn on LED 4
-          break;
-  }
-
-  // Move to the next LED
-  led_index++;
-  if (led_index > 3)
-  {
-      led_index = 0;  // Reset the index to loop back to the first LED
-  }
+  led_flag = !led_flag;
   /* USER CODE END TIM2_IRQn 1 */
 }
 
