@@ -15,7 +15,10 @@ for the next interrupt, improving overall system efficiency.
 
 **How it works**
 Every 1 second, the Timer sends an interrupt to CPU and the function called **void TIM2_IRQHandler(void)** in file stm32u5xx_it.c will be run.
+In this function an external variable called led_flag will be triggered and the main function will be run.
 You just need to start the Timer in interrupt mode in main.c. by using the following command:
       **HAL_TIM_Base_Start_IT(&htim2);**
 --->When the timer starts, it will generate an interrupt when the counter reaches the auto-reload value.
-for configuration of timer : https://deepbluembedded.com/stm32-timer-interrupt-hal-example-timer-mode-lab/
+
+**Clk Configuration**
+To configure the timer in CubeMX : https://deepbluembedded.com/stm32-timer-interrupt-hal-example-timer-mode-lab/
